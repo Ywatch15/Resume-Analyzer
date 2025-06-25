@@ -1,0 +1,41 @@
+body {
+  background: #f4f8fb;
+}
+header {
+  background: linear-gradient(90deg, #007bff 60%, #0056b3 100%);
+}
+.card {
+  border-radius: 1rem;
+}
+.card-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+#scoreReport .progress {
+  height: 28px;
+  margin-bottom: 1.2rem;
+  background: #e9ecef;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+#scoreReport .progress-bar {
+  font-weight: bold;
+  font-size: 1rem;
+  transition: width 1s cubic-bezier(.4,2,.6,1);
+}
+#tipsSection ul {
+  padding-left: 1.2em;
+}
+.bi {
+  vertical-align: -.125em;
+  font-size: 1.3em;
+}
+footer {
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+}
+@media (max-width: 768px) {
+  .display-5 { font-size: 2rem; }
+  header .container { flex-direction: column; align-items: flex-start; }
+  #feedbackSection .col-md-8, #feedbackSection .col-md-4 { flex: 0 0 100%; max-width: 100%; }
+}

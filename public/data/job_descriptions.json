@@ -1,0 +1,66 @@
+[
+  {
+    "title": "Frontend Developer",
+    "skills": ["JavaScript", "React", "CSS", "HTML", "Communication"]
+  },
+  {
+    "title": "Backend Developer",
+    "skills": ["Python", "Node.js", "SQL", "Problem Solving", "Project Management"]
+  },
+  {
+    "title": "Project Manager",
+    "skills": ["Project Management", "Teamwork", "Communication", "Problem Solving"]
+  },
+  {
+    "title": "ML Engineer",
+    "skills": ["Python", "Machine Learning", "TensorFlow", "PyTorch", "Data Preprocessing", "Model Deployment", "Statistics", "Deep Learning"]
+  },
+  {
+    "title": "AI Engineer",
+    "skills": ["Python", "Artificial Intelligence", "NLP", "Computer Vision", "Deep Learning", "TensorFlow", "PyTorch", "Algorithm Design"]
+  },
+  {
+    "title": "Data Scientist",
+    "skills": ["Python", "R", "Data Analysis", "Machine Learning", "Statistics", "Data Visualization", "Pandas", "Scikit-learn"]
+  },
+  {
+    "title": "Data Engineer",
+    "skills": ["Python", "SQL", "ETL", "Big Data", "Spark", "Data Warehousing", "Data Modeling", "Cloud Platforms"]
+  },
+  {
+    "title": "DevOps Engineer",
+    "skills": ["CI/CD", "Docker", "Kubernetes", "AWS", "Azure", "Linux", "Scripting", "Monitoring"]
+  },
+  {
+    "title": "Cloud Architect",
+    "skills": ["Cloud Computing", "AWS", "Azure", "GCP", "Architecture Design", "Security", "Networking", "DevOps"]
+  },
+  {
+    "title": "Business Analyst",
+    "skills": ["Business Analysis", "Requirements Gathering", "SQL", "Data Visualization", "Communication", "Process Improvement", "Stakeholder Management"]
+  },
+  {
+    "title": "Cybersecurity Analyst",
+    "skills": ["Cybersecurity", "Network Security", "Risk Assessment", "Incident Response", "SIEM", "Firewalls", "Vulnerability Assessment", "Python"]
+  },
+  {
+    "title": "Full Stack Developer",
+    "skills": ["JavaScript", "Node.js", "React", "SQL", "APIs", "HTML", "CSS", "Problem Solving"]
+  },
+  {
+    "title": "Database Administrator",
+    "skills": ["SQL", "Database Management", "Backup and Recovery", "Performance Tuning", "Security", "Oracle", "MySQL", "PostgreSQL"]
+  },
+  {
+    "title": "Product Manager",
+    "skills": ["Product Management", "Roadmapping", "Agile", "User Research", "Stakeholder Management", "Communication", "Market Analysis", "Strategy"]
+  },
+  {
+    "title": "QA Engineer",
+    "skills": ["Testing", "Automation", "Selenium", "Bug Tracking", "Test Planning", "Quality Assurance", "Python", "CI/CD"]
+  },
+  {
+    "title": "UI/UX Designer",
+    "skills": ["UI Design", "UX Research", "Wireframing", "Prototyping", "Figma", "Adobe XD", "User Testing", "Design Systems"]
+  }
+] 
