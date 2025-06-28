@@ -12,8 +12,8 @@ let selectedJD = null;
 
 // --- On Page Load ---
 document.addEventListener('DOMContentLoaded', async () => {
-  skillsList = await loadJSON('../data/skills.json');
-  jobDescriptions = await loadJSON('../data/job_descriptions.json');
+  skillsList = await loadJSON('data/skills.json');
+  jobDescriptions = await loadJSON('data/job_descriptions.json');
   populateJobDescDropdown();
 });
 
