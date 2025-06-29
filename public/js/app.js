@@ -59,13 +59,21 @@ function analyzeResume() {
   const feedback = [];
   const tips = [];
   // --- Keyword/Skill Matching ---
-  const matchedSkills = skillsList.filter(skill => {
-    // Match skill as a word or prefix (e.g., html matches html5)
-    const regex = new RegExp(`\\b${skill}`, 'i');
+  // Only match skills from the selected job description
+  const matchedSkills = selectedJD.skills.filter(skill => {
+    if (skill.length <= 2) {
+      const regex = new RegExp(`\\b${skill}\\b`, 'i');
+      return regex.test(resumeText);
+    }
+    const regex = new RegExp(skill, 'i');
     return regex.test(resumeText);
   });
   const missingSkills = selectedJD.skills.filter(skill => {
-    const regex = new RegExp(`\\b${skill}`, 'i');
+    if (skill.length <= 2) {
+      const regex = new RegExp(`\\b${skill}\\b`, 'i');
+      return !regex.test(resumeText);
+    }
+    const regex = new RegExp(skill, 'i');
     return !regex.test(resumeText);
   });
   // --- Scoring ---
@@ -89,14 +97,16 @@ function analyzeResume() {
 
 // --- Render Score Report ---
 function renderScoreReport(skillScore) {
+  // Cap the score at 100
+  const cappedScore = Math.min(skillScore, 100);
   document.getElementById('scoreReport').innerHTML = `
     <div class="mb-2">Skill Match</div>
     <div class="progress mb-3">
-      <div class="progress-bar bg-success" role="progressbar" style="width: ${skillScore}%">${skillScore}%</div>
+      <div class="progress-bar bg-success" role="progressbar" style="width: ${cappedScore}%">${cappedScore}%</div>
     </div>
     <div class="mb-2">ATS Score</div>
     <div class="progress">
-      <div class="progress-bar bg-info" role="progressbar" style="width: ${skillScore}%">${skillScore}%</div>
+      <div class="progress-bar bg-info" role="progressbar" style="width: ${cappedScore}%">${cappedScore}%</div>
     </div>
   `;
 }
