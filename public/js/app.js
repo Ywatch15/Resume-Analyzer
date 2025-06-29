@@ -52,6 +52,7 @@ async function extractTextFromPDF(file) {
   }
   return text;
 }
+// console.log("analyzeResume called");
 
 // --- Main Analysis Function ---
 function analyzeResume() {
@@ -78,9 +79,31 @@ function analyzeResume() {
   });
   // --- Scoring ---
   const skillScore = Math.round((matchedSkills.length / selectedJD.skills.length) * 100);
+
+  // --- ATS Score Calculation ---
+  let atsScore = skillScore;
+  if (resumeText.match(/educat|degree|univer|academic|qualification/i)) atsScore += 10;
+  if (resumeText.match(/experience|work|project|internship|employment/i)) atsScore += 10;
+  atsScore = Math.min(atsScore, 100);
+
+  // --- Positive Points ---
+  if (skillScore >= 90) {
+    feedback.push(`<span style='color:green'><b>Excellent!</b> Your skill match score is in the top 2% of applicants.</span>`);
+  } else if (skillScore >= 80) {
+    feedback.push(`<span style='color:green'><b>Great!</b> Your skill match score is in the top 4% of applicants.</span>`);
+  } else if (skillScore >= 70) {
+    feedback.push(`<span style='color:green'><b>Good!</b> Your skill match score is in the top 5% of applicants.</span>`);
+  }
+
   // --- Feedback ---
   feedback.push(`<b>Matched Skills:</b> ${matchedSkills.join(', ') || 'None'}`);
   feedback.push(`<b>Missing Skills:</b> ${missingSkills.join(', ') || 'None'}`);
+
+  // --- Awards/Certifications Suggestion ---
+  if (!resumeText.match(/award|certificat|honou?r|achievement|recognition/i)) {
+    tips.push('Consider adding an Awards or Certifications section to highlight your achievements.');
+  }
+
   // --- Tips Section ---
   if (missingSkills.length > 0) tips.push('Consider adding these skills: ' + missingSkills.join(', '));
   if (!resumeText.match(/educat|degree|univer|academic|qualification/i)) {
@@ -89,51 +112,77 @@ function analyzeResume() {
   if (!resumeText.match(/experience|work|project|internship|employment/i)) {
     tips.push('Add a Work Experience or Projects section.');
   }
+
   // --- Render ---
-  renderScoreReport(skillScore);
+  renderScoreReport(skillScore, atsScore);
   document.getElementById('feedbackDisplay').innerHTML = feedback.join('<br>');
   document.getElementById('tipsSection').innerHTML = '<ul>' + tips.map(t => `<li>${t}</li>`).join('') + '</ul>';
+
+  // --- Fill PDF Report Section ---
+  const pdfAtsScore = document.getElementById('pdfAtsScore');
+  const pdfSkillScore = document.getElementById('pdfSkillScore');
+  const pdfMatchedSkills = document.getElementById('pdfMatchedSkills');
+  const pdfMissingSkills = document.getElementById('pdfMissingSkills');
+  const pdfTips = document.getElementById('pdfTips');
+  if (pdfAtsScore && pdfSkillScore && pdfMatchedSkills && pdfMissingSkills && pdfTips) {
+    pdfAtsScore.textContent = atsScore + '%';
+    pdfSkillScore.textContent = skillScore + '%';
+    pdfMatchedSkills.innerHTML = matchedSkills.map(s => `<li>${s}</li>`).join('');
+    pdfMissingSkills.innerHTML = missingSkills.map(s => `<li>${s}</li>`).join('');
+    pdfTips.innerHTML = tips.map(t => `<li>${t}</li>`).join('');
+  }
 }
 
 // --- Render Score Report ---
-function renderScoreReport(skillScore) {
-  // Cap the score at 100
-  const cappedScore = Math.min(skillScore, 100);
+function renderScoreReport(skillScore, atsScore) {
+  const cappedSkillScore = Math.min(skillScore, 100);
+  const cappedATSScore = Math.min(atsScore, 100);
   document.getElementById('scoreReport').innerHTML = `
     <div class="mb-2">Skill Match</div>
     <div class="progress mb-3">
-      <div class="progress-bar bg-success" role="progressbar" style="width: ${cappedScore}%">${cappedScore}%</div>
+      <div class="progress-bar bg-success" role="progressbar" style="width: ${cappedSkillScore}%">${cappedSkillScore}%</div>
     </div>
     <div class="mb-2">ATS Score</div>
     <div class="progress">
-      <div class="progress-bar bg-info" role="progressbar" style="width: ${cappedScore}%">${cappedScore}%</div>
+      <div class="progress-bar bg-info" role="progressbar" style="width: ${cappedATSScore}%">${cappedATSScore}%</div>
     </div>
   `;
 }
 
 // --- Download Report ---
 document.getElementById('downloadBtn').addEventListener('click', () => {
-  const originalBodyBg = document.body.style.backgroundImage;
-  const analyzeSection = document.getElementById('analyze');
-  const originalAnalyzeBg = analyzeSection.style.backgroundImage;
+  // Gather data from the latest analysis
+  const scoreReport = document.getElementById('scoreReport');
+  const feedbackDisplay = document.getElementById('feedbackDisplay');
+  const tipsSection = document.getElementById('tipsSection');
 
-  // Remove background images from all children
-  const cards = analyzeSection.querySelectorAll('*');
-  const originalCardBgs = [];
-  cards.forEach(card => {
-    originalCardBgs.push(card.style.backgroundImage);
-    card.style.backgroundImage = 'none';
-  });
+  // ATS and Skill Score
+  const atsScore = scoreReport.querySelector('.progress-bar.bg-info')?.textContent.trim() || '';
+  const skillScore = scoreReport.querySelector('.progress-bar.bg-success')?.textContent.trim() || '';
 
-  document.body.style.backgroundImage = 'none';
-  analyzeSection.style.backgroundImage = 'none';
+  // Matched and Missing Skills
+  let matchedSkills = '';
+  let missingSkills = '';
+  const feedbackHtml = feedbackDisplay.innerHTML;
+  const matchedMatch = feedbackHtml.match(/Matched Skills:<\/b> ([^<]*)/i);
+  const missingMatch = feedbackHtml.match(/Missing Skills:<\/b> ([^<]*)/i);
+  if (matchedMatch && matchedMatch[1].trim() && matchedMatch[1].trim() !== 'None') {
+    matchedSkills = matchedMatch[1].split(',').map(s => s.trim()).join(',');
+  }
+  if (missingMatch && missingMatch[1].trim() && missingMatch[1].trim() !== 'None') {
+    missingSkills = missingMatch[1].split(',').map(s => s.trim()).join(',');
+  }
 
-  html2pdf().from(analyzeSection).save('Resume-Feedback.pdf').then(() => {
-    document.body.style.backgroundImage = originalBodyBg;
-    analyzeSection.style.backgroundImage = originalAnalyzeBg;
-    // Restore card backgrounds
-    cards.forEach((card, i) => {
-      card.style.backgroundImage = originalCardBgs[i];
-    });
-  });
-}); 
+  // Tips (pipe-separated)
+  let tips = '';
+  const tipsList = tipsSection.querySelectorAll('li');
+  if (tipsList.length > 0) {
+    tips = Array.from(tipsList).map(li => li.textContent.trim()).join('|');
+  }
+
+  // Build URL
+  const url = `pdf-report.html?ats=${encodeURIComponent(atsScore)}&skill=${encodeURIComponent(skillScore)}&matched=${encodeURIComponent(matchedSkills)}&missing=${encodeURIComponent(missingSkills)}&tips=${encodeURIComponent(tips)}`;
+
+  // Open in new tab
+  window.open(url, '_blank');
+});

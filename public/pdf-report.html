@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Analysis Report</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #fff; color: #222; }
+    .pdf-container { max-width: 600px; margin: 2em auto; padding: 2em; border-radius: 1em; }
+    h2 { text-align: center; margin-bottom: 1em; }
+    ul { margin: 0.5em 0 0.5em 1.5em; }
+  </style>
+</head>
+<body>
+  <div class="pdf-container">
+    <h2>Resume Analysis Report</h2>
+    <div><strong>ATS Score:</strong> <span id="pdfAtsScore"></span></div>
+    <div><strong>Skill Match:</strong> <span id="pdfSkillScore"></span></div>
+    <div><strong>Matched Skills:</strong><ul id="pdfMatchedSkills"></ul></div>
+    <div><strong>Missing Skills:</strong><ul id="pdfMissingSkills"></ul></div>
+    <div><strong>Tips & Suggestions:</strong><ul id="pdfTips"></ul></div>
+  </div>
+  <script>
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      document.getElementById('pdfAtsScore').textContent = params.get('ats') || '';
+      document.getElementById('pdfSkillScore').textContent = params.get('skill') || '';
+      document.getElementById('pdfMatchedSkills').innerHTML = (params.get('matched') || '').split(',').map(s => s ? `<li>${s}</li>` : '').join('');
+      document.getElementById('pdfMissingSkills').innerHTML = (params.get('missing') || '').split(',').map(s => s ? `<li>${s}</li>` : '').join('');
+      document.getElementById('pdfTips').innerHTML = (params.get('tips') || '').split('|').map(t => t ? `<li>${t}</li>` : '').join('');
+      // Optionally, trigger print or html2pdf here if you want auto-download
+    };
+  </script>
+</body>
+</html> 

@@ -235,3 +235,20 @@ footer .bi-heart-fill {
   #feedbackSection .col-md-8, #feedbackSection .col-md-4 { flex: 0 0 100%; max-width: 100%; }
   .hero-section { margin-top: 1rem; margin-bottom: 1rem; }
 }
+
+#pdfReport {
+  font-family: 'Inter', Arial, sans-serif;
+  background: #fff;
+  color: #222;
+  padding: 2em;
+  border-radius: 1em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+#pdfReport h2 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+#pdfReport ul {
+  margin: 0.5em 0 0.5em 1.5em;
+}
