@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   
 </head>
 <body>
@@ -19,7 +20,7 @@
       </a>
       <div class="d-flex align-items-center">
         <label class="switch me-3">
-          <input type="checkbox" id="themeToggle" onclick="toggleDarkMode()">
+          <input type="checkbox" id="themeToggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
           <span class="slider"></span>
         </label>
         <a href="#analyze" class="btn btn-primary rounded-pill px-4">Analyze Now</a>
@@ -61,36 +62,36 @@
     </div>
 
     <div class="text-end mt-4" data-aos="fade-up" data-aos-delay="300">
-      <button id="downloadBtn" class="btn btn-outline-secondary rounded-pill px-4">
+      <button type="button" id="downloadBtn" class="btn btn-primary btn-lg rounded-pill px-5 download-visible">
         <i class="bi bi-download me-1"></i> Download PDF Report
       </button>
     </div>
   </section>
 
-  <div id="pdfReport" style="display:none; max-width:600px; margin:2em auto; background:#fff; color:#222; padding:2em; border-radius:1em;">
-    <h2 style="text-align:center; margin-bottom: 1em;">Resume Analysis Report</h2>
-    <div style="margin-bottom:1em;">
+  <div id="pdfReport" class="pdf-report">
+    <h2 class="pdf-report-title">Resume Analysis Report</h2>
+    <div class="pdf-report-section">
       <strong>ATS Score:</strong> <span id="pdfAtsScore"></span>
     </div>
-    <div style="margin-bottom:1em;">
+    <div class="pdf-report-section">
       <strong>Skill Match:</strong> <span id="pdfSkillScore"></span>
     </div>
-    <div style="margin-bottom:1em;">
+    <div class="pdf-report-section">
       <strong>Matched Skills:</strong>
       <ul id="pdfMatchedSkills"></ul>
     </div>
-    <div style="margin-bottom:1em;">
+    <div class="pdf-report-section">
       <strong>Missing Skills:</strong>
       <ul id="pdfMissingSkills"></ul>
     </div>
-    <div style="margin-bottom:1em;">
+    <div class="pdf-report-section">
       <strong>Tips & Suggestions:</strong>
       <ul id="pdfTips"></ul>
     </div>
   </div>
 
   <footer data-aos="fade-up">
-    &copy; ResumeAnalyzer. Built with ❤️ by <a href="https://github.com/Ywatch15" target="_blank" class="text-decoration-none">Sundu</a>.
+    &copy; ResumeAnalyzer.</br> Built with ❤️ by <a href="https://github.com/Ywatch15" target="_blank" rel="noopener" class="text-decoration-none ">Sundu</a>.
   </footer>
 
   <script src="js/pdf.js"></script>

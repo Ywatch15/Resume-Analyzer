@@ -151,6 +151,22 @@ function renderScoreReport(skillScore, atsScore) {
 
 // --- Download Report ---
 document.getElementById('downloadBtn').addEventListener('click', () => {
+  // Check if resume is uploaded
+  if (!resumeText) {
+    // Show warning message near the button
+    let warning = document.getElementById('resumeWarning');
+    if (!warning) {
+      warning = document.createElement('div');
+      warning.id = 'resumeWarning';
+      warning.className = 'alert alert-warning mt-2';
+      warning.textContent = 'Kindly upload the resume before downloading the report!';
+      document.getElementById('downloadBtn').parentNode.appendChild(warning);
+    } else {
+      warning.style.display = 'block';
+    }
+    setTimeout(() => { if (warning) warning.style.display = 'none'; }, 3000);
+    return;
+  }
   // Gather data from the latest analysis
   const scoreReport = document.getElementById('scoreReport');
   const feedbackDisplay = document.getElementById('feedbackDisplay');
