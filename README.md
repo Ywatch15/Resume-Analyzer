@@ -185,13 +185,6 @@ This is the main JavaScript file that powers the Resume Analyzer. Here’s a bre
 
 ---
 
-### `6848efa7655d1699433447.png`
-- **What:** An image file (purpose depends on your usage; could be a logo or illustration).
-- **Where:** In the root of the project.
-- **Why:** Can be used for branding or visual enhancement.
-
----
-
 ## How All the Pieces Work Together
 
 - When you open `index.html`, the app loads the necessary data and libraries.
@@ -204,4 +197,3 @@ This setup keeps everything modular, easy to understand, and simple to extend. I
 
 ---
 
-If you’re learning or want to contribute, reading through `app.js` is a great way to see how everything fits together. Each function is designed to be clear and focused, making it a solid example of real-world JavaScript in action. 
